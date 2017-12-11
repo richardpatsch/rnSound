@@ -9,8 +9,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button,
+  ToastAndroid,
 } from 'react-native';
+
+import ToastExample from './components/ToastExample'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -32,6 +36,7 @@ export default class App extends Component<{}> {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        <Button title="Toast!!!!" onPress={()=>{ToastExample.show('Awesome', ToastExample.SHORT)}} />
       </View>
     );
   }
