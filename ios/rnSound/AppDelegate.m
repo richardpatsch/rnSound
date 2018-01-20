@@ -11,6 +11,8 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 @implementation AppDelegate
 
@@ -30,6 +32,15 @@
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  
+  NSError* error;
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+  [[AVAudioSession sharedInstance] setActive:YES error:&error];
+  
+  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  [self becomeFirstResponder];
+
+  
   [self.window makeKeyAndVisible];
   return YES;
 }
