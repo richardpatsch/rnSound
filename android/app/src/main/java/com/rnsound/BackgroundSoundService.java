@@ -45,6 +45,8 @@ public class BackgroundSoundService extends MediaBrowserServiceCompat implements
     public static final String COMMAND_NEW_PLAYLIST = "command_new_playlist";
     public static final String COMMAND_CHANGE_PLAYLIST_INDEX = "command_change_playlist_index";
     public static final String COMMAND_SOLO_PLAY = "command_solo_play";
+    public static final String COMMAND_PAUSE = "command_pause";
+    public static final String COMMAND_RESUME = "command_resume";
 
     public final String TAG = "BackgroundSoundService";
 
@@ -101,41 +103,6 @@ public class BackgroundSoundService extends MediaBrowserServiceCompat implements
             previous();
         }
 
-        /*
-        @Override
-        public void onPlayFromMediaId(String mediaId, Bundle extras) {
-            super.onPlayFromMediaId(mediaId, extras);
-
-            try {
-                AssetFileDescriptor afd = getResources().openRawResourceFd(Integer.valueOf(mediaId));
-                if( afd == null ) {
-                    return;
-                }
-
-                try {
-                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-
-                } catch( IllegalStateException e ) {
-                    mMediaPlayer.release();
-                    initMediaPlayer();
-                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                }
-
-                afd.close();
-                initMediaSessionMetadata(new Audio("", "init", "test"));
-
-            } catch (IOException e) {
-                return;
-            }
-
-            try {
-                mMediaPlayer.prepare();
-
-            } catch (IOException e) {}
-            //Work with extras here if you want
-        }
-        */
-
         @Override
         public void onCommand(String command, Bundle extras, ResultReceiver cb) {
             super.onCommand(command, extras, cb);
@@ -155,6 +122,10 @@ public class BackgroundSoundService extends MediaBrowserServiceCompat implements
                 if (newItem != null) {
                     play(newItem);
                 }
+            } else if (COMMAND_PAUSE.equalsIgnoreCase(command)) {
+                mMediaPlayer.pause();
+            } else if (COMMAND_RESUME.equalsIgnoreCase(command)) {
+                mMediaPlayer.start();
             }
         }
 

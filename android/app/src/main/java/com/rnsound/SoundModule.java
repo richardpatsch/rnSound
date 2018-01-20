@@ -93,6 +93,16 @@ public class SoundModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void pause() {
+        mMediaControllerCompat.sendCommand(BackgroundSoundService.COMMAND_PAUSE, null, null);
+    }
+
+    @ReactMethod
+    public void resume() {
+        mMediaControllerCompat.sendCommand(BackgroundSoundService.COMMAND_RESUME, null, null);
+    }
+
+    @ReactMethod
     public void setPlaylist(ReadableArray jsonArray) {
         Log.d("asdf", jsonArray.toString());
         int size = jsonArray.size();
